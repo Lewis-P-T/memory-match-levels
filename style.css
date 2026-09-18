@@ -1,0 +1,38 @@
+body {
+  font-family: system-ui, sans-serif;
+  background: #1e2230;
+  color: #eee;
+  text-align: center;
+  padding: 2rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 70px);
+  gap: 10px;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.card {
+  width: 70px;
+  height: 70px;
+  background: #3a4060;
+  border-radius: 8px;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card.flipped,
+.card.matched {
+  background: #565f8c;
+}
+
+.card.matched {
+  opacity: 0.6;
+  cursor: default;
+}
