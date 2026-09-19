@@ -13,9 +13,9 @@
   <section id="menu-screen">
     <p>Choose a difficulty</p>
     <div class="menu">
-      <button data-size="4">Easy <small>4×4</small></button>
-      <button data-size="6">Medium <small>6×6</small></button>
-      <button data-size="8">Hard <small>8×8</small></button>
+      <button data-size="4">Easy <small>4×4</small><small class="best" id="best-4"></small></button>
+      <button data-size="6">Medium <small>6×6</small><small class="best" id="best-6"></small></button>
+      <button data-size="8">Hard <small>8×8</small><small class="best" id="best-8"></small></button>
     </div>
   </section>
 
@@ -26,6 +26,16 @@
       <button id="back-btn">Menu</button>
     </div>
     <div id="board" class="board"></div>
+  </section>
+
+  <section id="win-screen" hidden>
+    <h2>You win!</h2>
+    <p>Time: <b id="win-time"></b> &middot; Moves: <b id="win-moves"></b></p>
+    <p id="win-record" class="record"></p>
+    <div class="menu">
+      <button id="again-btn">Play Again</button>
+      <button id="win-menu-btn">Back to Menu</button>
+    </div>
   </section>
 </main>
 <script src="script.js"></script>

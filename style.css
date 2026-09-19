@@ -91,3 +91,13 @@ button small {
 .board.size-6 .card {
   font-size: 1.6rem;
 }
+
+.best {
+  font-size: 0.7rem;
+  margin-top: 0.3rem;
+}
+
+.record {
+  color: #ffd76a;
+  min-height: 1.2em;
+}
