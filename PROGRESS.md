@@ -7,5 +7,5 @@ Flip-card memory game with selectable grid sizes, a timer, and saved best scores
 - [x] 3. Timer (counts up while playing) and move counter, displayed live during the game.
 - [x] 4. Win screen showing time + moves instead of alert, with "Play Again" and "Back to Menu" buttons.
 - [x] 5. Best score persistence in localStorage per grid size (best time, fewest moves), shown on the menu.
-- [ ] 6. Card flip CSS animation (3D flip transform) and responsive grid layout that works for all sizes.
-- [ ] 7. Polish: prevent rapid double-click bugs, keyboard focus styles, README with instructions.
+- [x] 6. Card flip CSS animation (3D flip transform) and responsive grid layout that works for all sizes.
+- [x] 7. Polish: prevent rapid double-click bugs, keyboard focus styles, README with instructions.

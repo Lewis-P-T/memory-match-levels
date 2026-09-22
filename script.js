@@ -100,24 +100,41 @@ function newGame(n) {
   moves = 0;
   $("moves").textContent = 0;
   $("time").textContent = formatTime(0);
-  $("board").style.gridTemplateColumns = `repeat(${n}, ${n > 6 ? 48 : 60}px)`;
   $("board").className = `board size-${n}`;
+  $("board").style.setProperty("--n", n);
   showScreen("game");
-  render();
+  buildBoard();
 }
 
-function render() {
+// Builds the card DOM once per game so CSS transitions can animate the flip
+// (a full re-render every click, as before, would reset the transform each time).
+function buildBoard() {
   const board = $("board");
   board.innerHTML = "";
   cards.forEach((symbol, i) => {
-    const el = document.createElement("div");
-    const isFlipped = flipped.includes(i) || matchedSet.has(i);
-    el.className = "card";
-    el.textContent = isFlipped ? symbol : "";
-    if (flipped.includes(i)) el.classList.add("flipped");
-    if (matchedSet.has(i)) el.classList.add("matched");
-    el.addEventListener("click", () => flipCard(i));
-    board.appendChild(el);
+    const card = document.createElement("div");
+    card.className = "card";
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.innerHTML = `<div class="card-inner"><div class="card-face card-front"></div><div class="card-face card-back">${symbol}</div></div>`;
+    card.addEventListener("click", () => flipCard(i));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        flipCard(i);
+      }
+    });
+    board.appendChild(card);
+  });
+  updateBoard();
+}
+
+function updateBoard() {
+  const board = $("board");
+  board.classList.toggle("locked", locked);
+  [...board.children].forEach((card, i) => {
+    card.classList.toggle("flipped", flipped.includes(i) || matchedSet.has(i));
+    card.classList.toggle("matched", matchedSet.has(i));
   });
 }
 
@@ -125,19 +142,20 @@ function flipCard(i) {
   if (locked || flipped.includes(i) || matchedSet.has(i)) return;
   if (timerId === null && moves === 0 && flipped.length === 0) startTimer();
   flipped.push(i);
-  render();
+  updateBoard();
   if (flipped.length < 2) return;
 
   moves++;
   $("moves").textContent = moves;
   locked = true;
+  updateBoard();
   const [a, b] = flipped;
   if (cards[a] === cards[b]) {
     matchedSet.add(a);
     matchedSet.add(b);
     flipped = [];
     locked = false;
-    render();
+    updateBoard();
     if (matchedSet.size === cards.length) {
       stopTimer();
       const secs = Math.floor((Date.now() - startTime) / 1000);
@@ -147,7 +165,7 @@ function flipCard(i) {
     setTimeout(() => {
       flipped = [];
       locked = false;
-      render();
+      updateBoard();
     }, 800);
   }
 }
